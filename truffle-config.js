@@ -28,6 +28,7 @@ module.exports = {
   api_keys: {
     etherscan: ETHERSCAN_API_KEY,
   },
+  contracts_build_directory: './src/abis/',
   compilers: {
     solc: {
       version: '^0.5.2',
