@@ -3,6 +3,7 @@ import { useWeb3React } from '@web3-react/core'
 
 import _StarToken from './abis/StarToken.json'
 import _GameNFT from './abis/GameNFT.json'
+import { Nav } from './components/nav';
 
 export const App = () => {
   const { library } = useWeb3React()
@@ -34,6 +35,7 @@ export const App = () => {
 
   return (
     <div>
+      <Nav />
       <h1>{}</h1>
     </div>
   )

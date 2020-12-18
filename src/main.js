@@ -2,6 +2,7 @@ import React, { useEffect } from 'react'
 import { Web3ReactProvider, useWeb3React } from '@web3-react/core'
 import { InjectedConnector } from '@web3-react/injected-connector'
 import Web3 from 'web3'
+
 import { App } from './app'
 
 const injectedConnector = new InjectedConnector({})
