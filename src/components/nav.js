@@ -1,35 +1,63 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import { useWeb3React } from '@web3-react/core'
+
+import { AppContext } from '../context'
 
 export const Nav = () => {
   const { chainId } = useWeb3React()
+  const myContext = useContext(AppContext)
+
+  const handleOnChange = (e) => {
+    e.persist()
+    return myContext.setAppState((prevState) => ({
+      ...prevState,
+      network: e.target.value,
+    }))
+  }
 
   return (
-    <nav className="navbar is-dark" aria-label="main navigation">
-      <div className="navbar-brand">
+    <nav className="navbar is-dark">
+      {/* <input value={myContext.appState.network} onChange={handleOnChange} /> */}
+      <div className="navbar-brand is-justify-content-space-between">
         <a className="navbar-item" href="/">
           <strong>
             <i className="fa fa-coins"></i> Token Wallet
           </strong>
         </a>
-        <a role="button" className="navbar-burger" aria-label="menu" aria-expanded="false">
-          <span aria-hidden="true"></span>
-          <span aria-hidden="true"></span>
-          <span aria-hidden="true"></span>
+        <a className="navbar-item" href="/">
+          <div className="tags has-addons">
+            <span className="tag">
+              <i className="fa fa-signal"></i> &nbsp; Network
+            </span>
+            <span className="tag is-info">{chainIdToHuman(chainId)}</span>
+          </div>
         </a>
-      </div>
-      <div className="navbar-menu is-active">
-        <div className="navbar-end">
-          <a className="navbar-item">
-            <div className="tags has-addons">
-              <span className="tag">
-                <i className="fa fa-signal"></i> &nbsp; Network
-              </span>
-              <span className="tag is-info">{chainId}</span>
-            </div>
-          </a>
-        </div>
       </div>
     </nav>
   )
+}
+
+const chainIdToHuman = (chainId) => {
+  let networkName
+  switch (chainId) {
+    case 1:
+      networkName = 'mainnet'
+      break
+    case 3:
+      networkName = 'ropsten'
+      break
+    case 4:
+      networkName = 'rinkeby'
+      break
+    case 42:
+      networkName = 'kovan'
+      break
+    case 1337:
+      networkName = 'local'
+      break
+    default:
+      networkName = 'undefined'
+  }
+
+  return networkName
 }
