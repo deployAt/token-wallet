@@ -18,6 +18,7 @@ export const defaultState = {
   tokens20: [],
   mintDetail20: null,
   approveDetail20: null,
+  transferDetail20: null,
   fields: {
     receiver: null,
     amount: null,
@@ -100,6 +101,7 @@ export const App = () => {
       ...prevState,
       mintDetail20: null,
       approveDetail20: null,
+      transferDetail20: null,
       fields: {},
     }))
   }

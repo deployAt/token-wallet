@@ -3,10 +3,11 @@ import React, { useContext } from 'react'
 import { AppContext } from '../../context'
 import { MintToken } from './mintToken'
 import { ApproveToken } from './approveToken'
+import { TransferToken } from './transferToken'
 
 export const TokenBlock20 = () => {
   const { appState, setAppState } = useContext(AppContext)
-  const { mintDetail20, approveDetail20 } = appState
+  const { mintDetail20, approveDetail20, transferDetail20 } = appState
 
   const handleDetail = (type, token) => () => {
     setAppState((prevState) => ({
@@ -26,10 +27,20 @@ export const TokenBlock20 = () => {
                 <div className="column is-2 is-size-5 is-ellipsis">{token.name}</div>
                 <div className="column is-2 is-size-6 is-ellipsis">{token.balance}</div>
                 <div className="column is-1.03 has-text-centered">
-                  <button className="button is-outlined is-small is-link">Send</button>
+                  <button
+                    className="button is-outlined is-small is-link"
+                    onClick={handleDetail('transferDetail20', token)}
+                  >
+                    Transfer
+                  </button>
                 </div>
                 <div className="column is-1.03 has-text-centered">
-                  <button className="button is-outlined is-small is-link" onClick={handleDetail('approveDetail20', token)}>Approve</button>
+                  <button
+                    className="button is-outlined is-small is-link"
+                    onClick={handleDetail('approveDetail20', token)}
+                  >
+                    Approve
+                  </button>
                 </div>
                 <div className="column is-1.03 has-text-centered">
                   <button className="button is-outlined is-small is-link" onClick={handleDetail('mintDetail20', token)}>
@@ -39,6 +50,7 @@ export const TokenBlock20 = () => {
               </div>
               {token === mintDetail20 && <MintToken />}
               {token === approveDetail20 && <ApproveToken />}
+              {token === transferDetail20 && <TransferToken />}
             </div>
           )
         })}
