@@ -17,6 +17,7 @@ export const defaultState = {
   defaultGasLimit: 200000,
   tokens20: [],
   mintDetail20: null,
+  approveDetail20: null,
   fields: {
     receiver: null,
     amount: null,
@@ -98,6 +99,7 @@ export const App = () => {
     setAppState((prevState) => ({
       ...prevState,
       mintDetail20: null,
+      approveDetail20: null,
       fields: {},
     }))
   }

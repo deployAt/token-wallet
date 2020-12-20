@@ -12,7 +12,7 @@ export const Container = () => {
           <div className="panel is-multiline">
             <AddressBar />
             <TokenBlock20 />
-            <MintToken />
+            {/* <MintToken /> */}
           </div>
         </div>
         <div className="is-half is-offset-one-half column">
