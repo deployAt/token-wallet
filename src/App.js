@@ -11,23 +11,27 @@ import { AppContext } from './context'
 import { TOKENS_20 } from './constants'
 
 export const defaultState = {
+  inProgress: false,
   network: 'Checking...',
   defaultGasPrice: null,
   defaultGasLimit: 200000,
   tokens20: [],
+  mintDetail20: null,
+  fields: {
+    receiver: null,
+    amount: null,
+    metadata: null,
+    tokenId: null,
+    gasPrice: null,
+    gasLimit: null,
+  },
+  tx20: null,
 }
 
 export const App = () => {
   const { library, account } = useWeb3React()
-
   const [appState, setAppState] = useState(defaultState)
-  const [contracts, setContracts] = useState({})
-  // console.log('state', appState)
-  const globalContext = {
-    appState,
-    setAppState,
-    contracts,
-  }
+  window.appState = appState // DEBUG ON
 
   const loadGasPrice = () => {
     library.eth.getGasPrice((err, price) => {
@@ -56,7 +60,7 @@ export const App = () => {
     const GameNFTDeployed = _GameNFT.networks[networkId]
     if (GameNFTDeployed) {
       const GameNFT = new library.eth.Contract(_GameNFT.abi, GameNFTDeployed.address)
-      setContracts((prevState) => ({ ...prevState, [_GameNFT.contractName]: GameNFT }))
+      // setContracts((prevState) => ({ ...prevState, [_GameNFT.contractName]: GameNFT }))
     }
 
     // Load all 20s
@@ -78,6 +82,7 @@ export const App = () => {
         name,
         symbol,
         address: tokenDeployed.address,
+        contract: tokenInstance,
       }
     })
 
@@ -89,10 +94,24 @@ export const App = () => {
     }))
   }
 
+  const clearTx = () => {
+    setAppState((prevState) => ({
+      ...prevState,
+      mintDetail20: null,
+      fields: {},
+    }))
+  }
+
   useEffect(() => {
     loadGasPrice()
     loadContracts()
   }, [])
+
+  const globalContext = {
+    appState,
+    setAppState,
+    clearTx,
+  }
 
   return (
     <AppContext.Provider value={globalContext}>

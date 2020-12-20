@@ -1,19 +1,16 @@
-import React, { useContext } from 'react'
+import React from 'react'
 import { useWeb3React } from '@web3-react/core'
-
-import { AppContext } from '../context'
 
 export const Nav = () => {
   const { chainId } = useWeb3React()
-  const myContext = useContext(AppContext)
 
-  const handleOnChange = (e) => {
-    e.persist()
-    return myContext.setAppState((prevState) => ({
-      ...prevState,
-      network: e.target.value,
-    }))
-  }
+  // const handleOnChange = (e) => {
+  //   e.persist()
+  //   return myContext.setAppState((prevState) => ({
+  //     ...prevState,
+  //     network: e.target.value,
+  //   }))
+  // }
 
   return (
     <nav className="navbar is-dark">

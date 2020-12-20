@@ -2,20 +2,17 @@ import React from 'react'
 
 import { AddressBar } from './addressBar'
 import { TokenBlock20 } from './tokenBlock20'
-
-import { TransferHeader } from './transferHeader'
+import { MintToken } from './mintToken'
 
 export const Container = () => {
-  const account = 'test'
-  const tx20 = null
-
   return (
     <section className="container">
       <div className="columns">
         <div className="is-half column">
           <div className="panel is-multiline">
-            <AddressBar account={account} tx={tx20} />
+            <AddressBar />
             <TokenBlock20 />
+            <MintToken />
           </div>
         </div>
         <div className="is-half is-offset-one-half column">
