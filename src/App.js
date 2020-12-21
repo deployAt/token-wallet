@@ -138,6 +138,8 @@ export const App = () => {
       approveDetail20: null,
       transferDetail20: null,
       mintDetail721: null,
+      approveDetail721: null,
+      transferDetail721: null,
       fields: {},
     }))
   }

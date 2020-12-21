@@ -7,4 +7,8 @@ contract JupiterToken is ERC20 {
     constructor() public ERC20("JupiterToken", "JPT") {
         _mint(msg.sender, 1000);
     }
+
+    function mint(address receiver, uint256 amount) public {
+        _mint(receiver, amount);
+    }
 }

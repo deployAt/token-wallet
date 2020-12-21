@@ -9,7 +9,6 @@ export const MintToken = (props) => {
   const { appState, setAppState, clearTx } = useContext(AppContext)
   const { mintDetail20, mintDetail721, inProgress, defaultGasPrice, defaultGasLimit, fields } = appState
 
-  console.log(mintDetail721, mintDetail20)
   const { is721 } = props
 
   const onMint = async () => {
@@ -19,6 +18,7 @@ export const MintToken = (props) => {
     }))
     const amount = fields.amount
     const receiver = fields.receiver.toString()
+    console.log('mint', mintDetail20)
     const txResponse = await mintDetail20.contract.methods.mint(receiver, amount).send({ from: account })
     console.log(txResponse)
 

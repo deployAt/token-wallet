@@ -1,11 +1,13 @@
 import React from 'react'
 
+import { TransactionInfo } from './transactionInfo'
 import { TokenBlock20 } from './tokenBlock20'
 import { TokenBlock721 } from './tokenBlock721'
 
 export const Container = () => {
   return (
     <section className="container">
+      <TransactionInfo />
       <div className="columns">
         <div className="is-half column">
           <div className="panel is-multiline">
