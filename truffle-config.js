@@ -1,7 +1,7 @@
 require('dotenv').config()
 const HDWalletProvider = require('@truffle/hdwallet-provider')
 
-const { INFURA_PROJECT_ID, PRIVATE_KEY_RINKEBY, ETHERSCAN_API_KEY } = process.env
+const { INFURA_PROJECT_ID, PRIVATE_KEY_RINKEBY, PRIVATE_KEY_RINKEBY_2, ETHERSCAN_API_KEY } = process.env
 
 module.exports = {
   networks: {
@@ -12,8 +12,12 @@ module.exports = {
       skipDryRun: true,
     },
     rinkeby: {
+      networkCheckTimeout: 10000,
       provider: function () {
-        return new HDWalletProvider(PRIVATE_KEY_RINKEBY, 'https://rinkeby.infura.io/v3/' + INFURA_PROJECT_ID)
+        return new HDWalletProvider(
+          [PRIVATE_KEY_RINKEBY, PRIVATE_KEY_RINKEBY_2],
+          'https://rinkeby.infura.io/v3/' + INFURA_PROJECT_ID
+        )
       },
       gas: 5000000,
       gasPrice: 25000000000,
