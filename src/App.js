@@ -1,14 +1,13 @@
 import React, { useEffect, useState } from 'react'
 import { useWeb3React } from '@web3-react/core'
+import * as R from 'ramda'
 
 import './app.css'
-import _StarToken from './abis/StarToken.json'
-import _GameNFT from './abis/GameNFT.json'
 import { Nav } from './components/nav'
 import { Description } from './components/description'
 import { Container } from './components/container/container'
 import { AppContext } from './context'
-import { TOKENS_20 } from './constants'
+import { TOKENS_20, TOKENS_721 } from './constants'
 
 export const defaultState = {
   inProgress: false,
@@ -19,6 +18,8 @@ export const defaultState = {
   mintDetail20: null,
   approveDetail20: null,
   transferDetail20: null,
+  tokens721: [],
+  mintDetail721: null,
   fields: {
     receiver: null,
     amount: null,
@@ -59,11 +60,11 @@ export const App = () => {
     // }
 
     // Load GameNFT
-    const GameNFTDeployed = _GameNFT.networks[networkId]
-    if (GameNFTDeployed) {
-      const GameNFT = new library.eth.Contract(_GameNFT.abi, GameNFTDeployed.address)
-      // setContracts((prevState) => ({ ...prevState, [_GameNFT.contractName]: GameNFT }))
-    }
+    // const GameNFTDeployed = _GameNFT.networks[networkId]
+    // if (GameNFTDeployed) {
+    //   const GameNFT = new library.eth.Contract(_GameNFT.abi, GameNFTDeployed.address)
+    //   // setContracts((prevState) => ({ ...prevState, [_GameNFT.contractName]: GameNFT }))
+    // }
 
     // Load all 20s
     const tokens20Promise = TOKENS_20.map(async (token) => {
@@ -87,12 +88,43 @@ export const App = () => {
         contract: tokenInstance,
       }
     })
-
     const tokens20 = await Promise.all(tokens20Promise)
-
     setAppState((prevState) => ({
       ...prevState,
       tokens20,
+    }))
+
+    // Load all 721s
+    const tokens721Promise = TOKENS_721.map(async (token) => {
+      const tokenDeployed = token.networks[networkId]
+      const tokenInstance = new library.eth.Contract(token.abi, tokenDeployed.address)
+      // setContracts((prevState) => ({ ...prevState, [token.contractName]: tokenInstance }))
+
+      const balance = await tokenInstance.methods.balanceOf(account).call()
+      const name = await tokenInstance.methods.name().call()
+      const symbol = await tokenInstance.methods.symbol().call()
+
+      const tokenDetailsPromise = R.range(0, Number(balance)).map(async (i) => {
+        const tokenOfOwnerByIndex = await tokenInstance.methods.tokenOfOwnerByIndex(account, i).call()
+        const tokenURI = await tokenInstance.methods.tokenURI(tokenOfOwnerByIndex).call()
+        return { tokenId: tokenOfOwnerByIndex, tokenURI }
+      })
+      const tokenDetails = await Promise.all(tokenDetailsPromise)
+
+      return {
+        balance,
+        name,
+        symbol,
+        address: tokenDeployed.address,
+        contract: tokenInstance,
+        tokenDetails,
+      }
+    })
+    const tokens721 = await Promise.all(tokens721Promise)
+
+    setAppState((prevState) => ({
+      ...prevState,
+      tokens721,
     }))
   }
 
@@ -102,6 +134,7 @@ export const App = () => {
       mintDetail20: null,
       approveDetail20: null,
       transferDetail20: null,
+      mintDetail721: null,
       fields: {},
     }))
   }

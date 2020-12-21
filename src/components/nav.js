@@ -2,7 +2,7 @@ import React from 'react'
 import { useWeb3React } from '@web3-react/core'
 
 export const Nav = () => {
-  const { chainId } = useWeb3React()
+  const { chainId, account } = useWeb3React()
 
   // const handleOnChange = (e) => {
   //   e.persist()
@@ -21,6 +21,9 @@ export const Nav = () => {
             <i className="fa fa-coins"></i> Token Wallet
           </strong>
         </a>
+        <div className="navbar-item" href="/">
+          <span className="is-size-7">Connected: <strong className="has-text-white">{account}</strong></span>
+        </div>
         <a className="navbar-item" href="/">
           <div className="tags has-addons">
             <span className="tag">

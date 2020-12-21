@@ -7,7 +7,7 @@ import { InputField } from './inputField'
 export const MintToken = () => {
   const { account } = useWeb3React()
   const { appState, setAppState, clearTx } = useContext(AppContext)
-  const { mintDetail20, inProgress, defaultGasPrice, defaultGasLimit, fields } = appState
+  const { mintDetail20, mintDetail721, inProgress, defaultGasPrice, defaultGasLimit, fields } = appState
 
   const onMint = async () => {
     setAppState((prevState) => ({
@@ -39,7 +39,13 @@ export const MintToken = () => {
       <div className="panel-block is-paddingless is-12">
         <div className="column is-12" id="token-lists">
           <InputField name="receiver" placeholder="Receiver Address" />
-          <InputField name="amount" placeholder="Amount To Mint" addon={mintDetail20.symbol} />
+
+          {mintDetail721 ? (
+            <InputField name="metadata" placeholder="Metadata" />
+          ) : (
+            <InputField name="amount" placeholder="Amount To Mint" addon={mintDetail20.symbol} />
+          )}
+
           <InputField
             default={defaultGasPrice}
             name="gasPrice"

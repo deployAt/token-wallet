@@ -1,32 +1,20 @@
-pragma solidity ^0.5.2;
+// SPDX-License-Identifier: MIT
+pragma solidity ^0.7.3;
 
-import "openzeppelin-solidity/contracts/token/ERC721/ERC721Metadata.sol";
+import "@openzeppelin/contracts/token/ERC721/ERC721.sol";
+import "@openzeppelin/contracts/utils/Counters.sol";
 
-contract GameNFT is ERC721Metadata {
-    uint256 public tokenId;
-    mapping(address => uint256) public gameTrack;
+contract GameNFT is ERC721 {
+    using Counters for Counters.Counter;
+    Counters.Counter private _tokenIds;
 
-    constructor() public ERC721Metadata("Game Token", "GAME") {
-        tokenId = 0;
-    }
+    constructor() public ERC721("GameToken", "GME") {}
 
-    function createNFT(address receiver, string calldata metadata) external returns (uint256) {
-        tokenId++;
-        _mint(receiver, tokenId);
-        _setTokenURI(tokenId, metadata);
-        gameTrack[receiver] = tokenId;
-        return tokenId;
-    }
-
-    function transferNFT(
-        address sender,
-        address receiver,
-        uint256 _tokenId,
-        string calldata metadata
-    ) external {
-        _transferFrom(sender, receiver, _tokenId);
-        _setTokenURI(_tokenId, metadata);
-        delete gameTrack[sender];
-        gameTrack[receiver] = _tokenId;
+    function createGameItem(address receiver, string memory tokenURI) public returns (uint256) {
+        _tokenIds.increment();
+        uint256 newGameId = _tokenIds.current();
+        _mint(receiver, newGameId);
+        _setTokenURI(newGameId, tokenURI);
+        return newGameId;
     }
 }
