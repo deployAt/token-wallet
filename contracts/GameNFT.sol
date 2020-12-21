@@ -10,7 +10,7 @@ contract GameNFT is ERC721 {
 
     constructor() public ERC721("GameToken", "GME") {}
 
-    function createGameItem(address receiver, string memory tokenURI) public returns (uint256) {
+    function mint(address receiver, string memory tokenURI) public returns (uint256) {
         _tokenIds.increment();
         uint256 newGameId = _tokenIds.current();
         _mint(receiver, newGameId);

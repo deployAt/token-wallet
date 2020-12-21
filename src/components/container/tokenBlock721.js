@@ -7,12 +7,12 @@ import { TransferToken } from './transferToken'
 
 export const TokenBlock721 = () => {
   const { appState, setAppState, clearTx } = useContext(AppContext)
-  const { mintDetail20, approveDetail20, transferDetail20 } = appState
+  const { mintDetail721, approveDetail721, transferDetail721 } = appState
 
   const [detail721, setDetail721] = useState(null)
 
   const handleDetail = (type, token) => () => {
-    if (mintDetail20 || approveDetail20 || transferDetail20) {
+    if (mintDetail721 || approveDetail721 || transferDetail721) {
       clearTx()
     } else {
       setAppState((prevState) => ({
@@ -21,7 +21,6 @@ export const TokenBlock721 = () => {
       }))
     }
   }
-  console.log('detail721', detail721)
 
   const toggleDetail = (index) => () => {
     if (detail721 || detail721 === 0) {
@@ -51,7 +50,7 @@ export const TokenBlock721 = () => {
                 <div className="column has-text-centered">
                   <button
                     className="button is-outlined is-small is-link"
-                    onClick={handleDetail('transferDetail20', token)}
+                    onClick={handleDetail('transferDetail721', token)}
                   >
                     Transfer
                   </button>
@@ -59,21 +58,21 @@ export const TokenBlock721 = () => {
                 <div className="column has-text-centered">
                   <button
                     className="button is-outlined is-small is-link"
-                    onClick={handleDetail('approveDetail20', token)}
+                    onClick={handleDetail('approveDetail721', token)}
                   >
                     Approve
                   </button>
                 </div>
                 <div className="column has-text-centered">
-                  <button className="button is-outlined is-small is-link" onClick={handleDetail('mintDetail20', token)}>
+                  <button className="button is-outlined is-small is-link" onClick={handleDetail('mintDetail721', token)}>
                     Mint
                   </button>
                 </div>
               </div>
               {index === detail721 && <Detail721 tokenDetails={token.tokenDetails} />}
-              {token === mintDetail20 && <MintToken />}
-              {token === approveDetail20 && <ApproveToken />}
-              {token === transferDetail20 && <TransferToken />}
+              {token === mintDetail721 && <MintToken is721 />}
+              {token === approveDetail721 && <ApproveToken is721/>}
+              {token === transferDetail721 && <TransferToken is721/>}
             </div>
           )
         })}

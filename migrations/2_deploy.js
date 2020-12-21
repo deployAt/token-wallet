@@ -10,15 +10,15 @@ module.exports = async function (deployer, _network, addresses) {
 
   await deployer.deploy(ArtNFT)
   const artNFT = await ArtNFT.deployed()
-  await artNFT.createArt(user0, 'Mona Lisa')
+  await artNFT.mint(user0, 'Mona Lisa')
 
   await deployer.deploy(GameNFT)
   const gameNFT = await GameNFT.deployed()
-  await gameNFT.createGameItem(user0, 'Helm of Chaos')
-  await gameNFT.createGameItem(user0, 'Sword of Hellfire')
+  await gameNFT.mint(user0, 'Helm of Chaos')
+  await gameNFT.mint(user0, 'Sword of Hellfire')
 
-  await gameNFT.createGameItem(user1, 'Charm of Mana')
-  await gameNFT.createGameItem(user1, 'Ring of Life')
+  await gameNFT.mint(user1, 'Charm of Mana')
+  await gameNFT.mint(user1, 'Ring of Life')
 
   // console.log('uri', await artNFT.tokenURI(1))
   // console.log('balance', await artNFT.balanceOf(user0))

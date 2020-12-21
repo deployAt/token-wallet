@@ -20,6 +20,8 @@ export const defaultState = {
   transferDetail20: null,
   tokens721: [],
   mintDetail721: null,
+  approveDetail721: null,
+  transferDetail721: null,
   fields: {
     receiver: null,
     amount: null,
@@ -29,6 +31,7 @@ export const defaultState = {
     gasLimit: null,
   },
   tx20: null,
+  tx721: null,
 }
 
 export const App = () => {

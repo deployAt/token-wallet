@@ -10,7 +10,7 @@ contract ArtNFT is ERC721 {
 
     constructor() public ERC721("ArtToken", "ART") {}
 
-    function createArt(address receiver, string memory tokenURI) public returns (uint256) {
+    function mint(address receiver, string memory tokenURI) public returns (uint256) {
         _tokenIds.increment();
         uint256 newArtId = _tokenIds.current();
         _mint(receiver, newArtId);
